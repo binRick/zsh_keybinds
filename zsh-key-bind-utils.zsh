@@ -165,3 +165,9 @@ __get_json_encoded_key_bind_fxns() {
 			fxn_file="$(__zsh_fxn_filename "$fxn")"
 	done
 }
+
+__get_bound_keys_and_fxns(){
+  grep '^"\^[A-Z]" __fzf_[a-z0-9].*$' < <(bindkey)|while IFS=' ' read -r key fxn; do 
+    printf "%s %s\n" "${${key//\"/}//^/}" "$fxn"
+  done
+}
